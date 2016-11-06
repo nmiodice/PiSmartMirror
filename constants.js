@@ -9,7 +9,7 @@ var LOCATION = {
 	COUNTRY : 'US'
 };
 
-var getAPIKey = function(keyname) {
+function getAPIKey(keyname) {
 	var apiKey = fs.readFileSync('api_keys/' + keyname, 'utf8');
 	console.log('found api key: ' + apiKey);
 	return apiKey;
@@ -20,7 +20,7 @@ var API_KEYS = {
 	NEWS_KEY    : getAPIKey('news.key')
 }
 
-var buildWeatherAPIPath = function(uriPart) {
+function buildWeatherAPIPath(uriPart) {
 	return '/data/2.5/' + uriPart + '?q=' + LOCATION.CITY + ',' + LOCATION.COUNTRY + '&units=imperial' + '&APPID=' + API_KEYS.WEATHER_KEY;
 };
 

@@ -4,7 +4,7 @@ var io = require('socket.io')(server);
 var constants = require('./constants.js');
 var clientupdater = require('./clientupdater.js')
 
-var initServer = function() {
+function initServer() {
 	app.get('/', function(req, res) {  
 	    res.sendFile(__dirname + '/index.html');
 	});
@@ -12,23 +12,26 @@ var initServer = function() {
 	server.listen(constants.CONNECTION.PORT);  	
 }
 
-var initWebSockets = function() {
+function startInterval(seconds, callback) {
+  callback();
+  return setInterval(callback, seconds * 1000);
+}
+
+function initWebSockets() {
 	io.on('connection', function(socket) {
 
 		var updateCallback = function(topic, message) {
 			console.log('emitting message on topic = \'' + topic + '\'');
 			io.to(socket.id).emit(topic, message)
 		}
-		
-		clientupdater.update(updateCallback);
 
-		// var interval = setInterval(function() {
-		// 	clientupdater.update(updateCallback);
-		// }, 2000)
+		var interval = startInterval(5, function() {
+			clientupdater.update(updateCallback);
+		})
 
-	    // socket.on('disconnect', function() {
-     //    	clearInterval(interval)
-     //    });
+	    socket.on('disconnect', function() {
+        	clearInterval(interval)
+        });
     });
 };
 

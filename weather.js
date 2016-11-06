@@ -1,7 +1,7 @@
 var constants = require('./constants.js');
 var http = require('./easyhttp.js');
 
-var parseWeatherItem = function(weather) {
+function parseWeatherItem(weather) {
 	return {
 		minTemp     : weather.main.temp_min,
 		maxTemp     : weather.main.temp_max,
@@ -12,7 +12,7 @@ var parseWeatherItem = function(weather) {
 	};
 }
 
-var updateWeather = function(updateCallback, weather) {
+function updateWeather(updateCallback, weather) {
 	var response = parseWeatherItem(weather);
 	response.name = weather.name;
 	response.temp = weather.main.temp;
@@ -20,7 +20,7 @@ var updateWeather = function(updateCallback, weather) {
 	updateCallback('weather', response);
 }
 
-var updateForecast = function(updateCallback, forecast) {
+function updateForecast(updateCallback, forecast) {
 
 	var sortforecasts = function(a, b) {
 		return a.dt - b.dt;
@@ -32,7 +32,7 @@ var updateForecast = function(updateCallback, forecast) {
 	})
 }
 
-var update = function(updateCallback) {
+function update(updateCallback) {
 	http.call(constants.WEATHER.API_HOST, constants.WEATHER.API_WEATHER_PATH, function(weather) {
 		updateWeather(updateCallback, weather);
 	})

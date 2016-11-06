@@ -1,6 +1,6 @@
 var http = require('follow-redirects').http;
 
-var easyHTTPCall = function(host, path, callback) {
+function easyHTTPCall(host, path, callback) {
 	var options = {
 		host : host,
 		path : path
@@ -25,11 +25,11 @@ var easyHTTPCall = function(host, path, callback) {
  * this chains many HTTP calls together and only executes the callback
  * when all of the individual HTTP requests have been made
  */
-var easyHttpBatchCall = function(callData, callback) {
+function easyHttpBatchCall(callData, callback) {
 	_easyHttpBatchCall(callData, callback, []);
 };
 
-var _easyHttpBatchCall = function(callData, callback, allResponses) {
+function _easyHttpBatchCall(callData, callback, allResponses) {
 	if (allResponses.length == callData.length) {
 		callback(allResponses);
 		return;
