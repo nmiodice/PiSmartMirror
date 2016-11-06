@@ -1,0 +1,11 @@
+<script src="/socket.io/socket.io.js"></script>  
+<script>  
+    var socket = io.connect('/');
+    socket.on('weather', function(data) {
+        console.log('Connected clients:', data);
+    });
+
+    socket.on('forecast', function(data) {
+        console.log('Connected clients:', data);
+    });
+</script>  
