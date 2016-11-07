@@ -6,7 +6,11 @@ var clientupdater = require('./js/updaters/updater.js')
 
 function initServer() {
 	app.get('/', function(req, res) {  
-	    res.sendFile(__dirname + '/index.html');
+	    res.sendFile(__dirname + '/static/index.html');
+	});
+
+	app.get('/bundle.js', function(req, res) {
+		res.sendFile(__dirname + '/static/bundle.js');
 	});
 
 	server.listen(constants.CONNECTION.PORT);  	
@@ -25,7 +29,7 @@ function initWebSockets() {
 			io.to(socket.id).emit(topic, message)
 		}
 
-		var interval = startInterval(10, function() {
+		var interval = startInterval(60, function() {
 			clientupdater.update(updateCallback);
 		})
 

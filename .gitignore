@@ -1,2 +1,7 @@
-/api_keys
-/node_modules
+*/api_keys
+*/node_modules
+*/npm-debug.log
+*/.saas-cache
+*/styles.css
+*/styles.css.map
+*/bundle.js

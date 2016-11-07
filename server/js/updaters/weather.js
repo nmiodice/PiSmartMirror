@@ -1,10 +1,8 @@
-var constants = require('./constants.js');
-var http = require('./easyhttp.js');
+var constants = require('../constants.js');
+var http = require('../utils//easyhttp.js');
 
-function parseWeatherItem(weather) {
+function parseCommonWeather(weather) {
 	return {
-		minTemp     : weather.main.temp_min,
-		maxTemp     : weather.main.temp_max,
 		humidity    : weather.main.humidity,
 		wind        : weather.wind.speed,
 		desc_simple : weather.weather[0].main.toLowerCase(),
@@ -12,12 +10,27 @@ function parseWeatherItem(weather) {
 	};
 }
 
-function updateWeather(updateCallback, weather) {
-	var response = parseWeatherItem(weather);
+function parseWeatherItem(weather) {
+	var response = parseCommonWeather(weather);
 	response.name = weather.name;
 	response.temp = weather.main.temp;
+	response.minTemp = weather.main.temp_min;
+	response.maxTemp = weather.main.temp_max;
 
-	updateCallback('weather', response);
+	return response;
+}
+
+function parseForcastItem(weather) {
+	var response = parseCommonWeather(weather);
+	response.temp = weather.main.temp_min;
+	response.date = weather.dt;
+	response.date_string = weather.dt_txt;
+
+	return response;
+}
+
+function updateWeather(updateCallback, weather) {
+	updateCallback('weather', parseWeatherItem(weather));
 }
 
 function updateForecast(updateCallback, forecast) {
@@ -28,7 +41,7 @@ function updateForecast(updateCallback, forecast) {
 
 	updateCallback('forecast', {
 		'city'    : forecast.city.name,
-		'forecast' : forecast.list.sort(sortforecasts).map(parseWeatherItem)
+		'forecast' : forecast.list.sort(sortforecasts).map(parseForcastItem)
 	})
 }
 

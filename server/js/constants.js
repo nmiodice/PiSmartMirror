@@ -10,7 +10,7 @@ var LOCATION = {
 };
 
 function getAPIKey(keyname) {
-	var apiKey = fs.readFileSync('api_keys/' + keyname, 'utf8');
+	var apiKey = fs.readFileSync('./api_keys/' + keyname, 'utf8');
 	console.log('found api key: ' + apiKey);
 	return apiKey;
 }

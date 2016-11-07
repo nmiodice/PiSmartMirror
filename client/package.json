@@ -1,0 +1,32 @@
+{
+  "name" : "smartmirror",
+  "version" : "0.0.1",
+  "description" : "",
+  "main" : "js/app.js",
+  "dependencies" : {
+    "flux" : "latest",
+    "keymirror" : "latest",
+    "object-assign" : "latest",
+    "react" : "latest",
+    "react-dom" : "latest",
+    "keymirror" : "latest",
+    "socket.io-client" : "latest"
+  },
+  "devDependencies" : {
+    "browserify" : "latest",
+    "envify" : "latest",
+    "reactify" : "latest",
+    "watchify" : "latest",
+    "jquery" : "latest",
+    "bootstrap" : "latest",
+    "watchify" : "latest"
+  },
+  "scripts" : {
+    "start" : "watchify -o ./static/bundle.js -v -d js/app.js & sass --watch sass:./static/assets/",
+    "build" : "sass sass/styles.scss static/assets/styles.css & browserify -t [ babelify --presets [ es2015 react ] ] -t [envify --NODE_ENV production] js/app.js | uglifyjs -cm > ./static/bundle.min.js"
+  },
+  "author" : "Nicholas M. Iodice",
+  "browserify" : {
+    "transform" : [ "reactify", "envify" ]
+  }
+}
